@@ -1,0 +1,6 @@
+.ee-widget{padding:.6rem .9rem;margin:.5rem 0 1rem;border-left:4px solid var(--md-primary-fg-color);background:var(--md-code-bg-color);border-radius:4px}
+.ee-widget select{margin:0 .5rem;padding:.15rem .3rem}.ee-note{font-size:.75rem;opacity:.7}
+.ee-reveal{border:1px dashed var(--md-default-fg-color--lighter);border-radius:4px;padding:.3rem .8rem;margin:1rem 0}
+.ee-reveal summary{cursor:pointer;font-weight:600}
+.ee-bar{height:14px;background:var(--md-default-fg-color--lightest);border-radius:7px;overflow:hidden}.ee-bar div{height:100%;background:#2a9d8f}
+a.ee-done::after{content:" \2713";color:#2a9d8f;font-weight:700}
