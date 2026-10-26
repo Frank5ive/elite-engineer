@@ -17,9 +17,9 @@ function lessonWidget(){var p=curPath();if(!p)return;var art=document.querySelec
  var h=art.querySelector("h1");if(h)h.insertAdjacentElement("afterend",d)}
 function reveals(){document.querySelectorAll("article h3, article h2").forEach(function(h){
  if(!/^Reveal/i.test(h.textContent.trim())||h.dataset.done)return;h.dataset.done=1;
- var lvl=+h.tagName[1],det=document.createElement("details");det.className="ee-reveal";var sum=document.createElement("summary");sum.textContent=h.textContent.replace("\u00b6","").trim()+" (click only after predicting)";det.appendChild(sum);
+ var lvl=+h.tagName[1],det=document.createElement("details");det.className="ee-reveal";det.id=h.id;var sum=document.createElement("summary");sum.textContent=h.textContent.replace("\u00b6","").trim()+" (click only after predicting)";det.appendChild(sum);
  var n=h.nextElementSibling,items=[];while(n&&!(/^H[1-6]$/.test(n.tagName)&&+n.tagName[1]<=lvl)){items.push(n);n=n.nextElementSibling}
- h.parentNode.insertBefore(det,h);items.forEach(function(x){det.appendChild(x)});h.remove()})}
+ document.querySelectorAll(".md-nav--secondary a[href=\"#"+h.id+"\"]").forEach(function(a){var li=a.closest("li");if(li)li.style.display="none"});h.parentNode.insertBefore(det,h);items.forEach(function(x){det.appendChild(x)});h.remove()})}
 function dashboard(){var el=document.getElementById("progress-dashboard");if(!el)return;var s=load(),counts={};STATUS.forEach(function(x){counts[x]=0});
  LESSONS.forEach(function(l){counts[s[keyOf(l.path)]||"Unseen"]++});
  var done=LESSONS.filter(function(l){return STATUS.indexOf(s[keyOf(l.path)]||"Unseen")>=3}).length,pct=Math.round(100*done/LESSONS.length);
@@ -32,6 +32,26 @@ function dashboard(){var el=document.getElementById("progress-dashboard");if(!el
  el.innerHTML=h;
  document.getElementById("ee-export").onclick=function(){var b=new Blob([JSON.stringify(load(),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="ledger.json";a.click()};
  document.getElementById("ee-reset").onclick=function(){if(confirm("Reset all progress?")){save({});dashboard();badge()}}}
-function run(){badge();lessonWidget();reveals();dashboard()}
+
+function polish(){
+ var art=document.querySelector("article.md-content__inner");if(!art)return;
+ // reading time
+ var h=art.querySelector("h1");
+ if(h&&!art.querySelector(".ee-readtime")&&art.querySelectorAll("h2").length>6){
+  var w=(art.innerText||"").split(/\s+/).length,m=Math.max(1,Math.round(w/200));
+  var p=document.createElement("p");p.className="ee-readtime";p.textContent="Reading time \u2248 "+m+" min \u00b7 "+w.toLocaleString()+" words. Doing the work takes hours.";h.insertAdjacentElement("afterend",p)}
+ // metadata card: first table before first h2
+ var t=art.querySelector("table");var h2=art.querySelector("h2");
+ if(t&&h2&&!t.classList.contains("ee-meta")&&(t.compareDocumentPosition(h2)&Node.DOCUMENT_POSITION_FOLLOWING)){
+  var hd=(t.querySelector("th")||{}).textContent||"";if(/^(field|item|property|key|lesson|attribute)/i.test(hd.trim())||t.querySelectorAll("th").length===2)t.classList.add("ee-meta")}
+ // attempt-first callout
+ art.querySelectorAll("p,blockquote").forEach(function(e){if(/^\s*Attempt first\./.test(e.textContent))e.classList.add("ee-attempt")});
+ // section cues
+ art.querySelectorAll("h2").forEach(function(e){var x=e.textContent;
+  if(/Failure laboratory/i.test(x))e.classList.add("ee-h-lab");
+  else if(/Mastery gate/i.test(x))e.classList.add("ee-h-gate");
+  else if(/^\s*9\.\s*Project/i.test(x))e.classList.add("ee-h-project");
+  else if(/Independent implementation/i.test(x))e.classList.add("ee-h-chal")})}
+function run(){badge();lessonWidget();reveals();polish();dashboard()}
 if(typeof document$!=="undefined")document$.subscribe(run);else document.addEventListener("DOMContentLoaded",run);
 })();

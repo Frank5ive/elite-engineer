@@ -2,20 +2,33 @@ site_name: The Elite Engineer
 site_description: Project-driven training system for full-stack, modern C++ and quant development
 theme:
   name: material
-  features: [navigation.sections, navigation.top, navigation.footer, search.suggest, search.highlight, content.code.copy, toc.follow]
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
       toggle: {icon: material/weather-night, name: Dark mode}
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
       toggle: {icon: material/weather-sunny, name: Light mode}
 markdown_extensions:
   - tables
   - admonition
   - attr_list
+  - md_in_html
   - sane_lists
   - pymdownx.details
   - pymdownx.highlight
@@ -26,69 +39,71 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - toc:
       permalink: true
+repo_url: https://github.com/Frank5ive/elite-engineer
+repo_name: Frank5ive/elite-engineer
 plugins: [search]
 extra_javascript: [assets/progress.js]
 extra_css: [assets/progress.css]
 nav:
   - Home: index.md
-  - "Start Here":
-      - "The Elite Engineer: How to Use This Book": 00-front/README.md
-      - "Diagnostic Assessment": 00-front/DIAGNOSTIC.md
+  - "Start here":
+      - "How to use this book": 00-front/README.md
+      - "Diagnostic": 00-front/DIAGNOSTIC.md
       - "Roadmap": 00-front/ROADMAP.md
-      - "Continue Here: Handoff for a New Claude Session": 00-front/CONTINUE-HERE.md
-      - "Consolidated VERIFY list": 00-front/VERIFY-LIST.md
-  - "Volume 0: Job readiness":
-      - "Lesson 0.1: The Day-One Protocol": 01-vol0-job-readiness/0.1-day-one-protocol.md
-      - "Lesson 0.2: Git Workflow, Recovery, and Pull-Request Hygiene": 01-vol0-job-readiness/0.2-git-workflow.md
-      - "Lesson 0.3: Debugging Method and the Failure Log": 01-vol0-job-readiness/0.3-debugging-and-failure-log.md
-      - "Lesson 0.4: Communication for Working Engineers": 01-vol0-job-readiness/0.4-communication.md
-  - "Volume 1: Python":
-      - "Lesson 1.1: The Python Object Model, Mutability, Scope and Closures": 02-vol1-python/1.1-object-model.md
-      - "Lesson 1.2: Iterators, Generators, Context Managers and Exceptions": 02-vol1-python/1.2-iterators-generators-context-managers-exceptions.md
-      - "Lesson 1.3: Types, Packaging, Configuration and Logging": 02-vol1-python/1.3-types-packaging-config-logging.md
-      - "Lesson 1.4: pytest, Fixtures, Mocking and Deterministic Tests": 02-vol1-python/1.4-pytest-fixtures-mocking.md
-  - "Volume 2: FastAPI & backend":
-      - "Lesson 2.1: HTTP, REST and API Contracts": 03-vol2-fastapi-backend/2.1-http-rest-contracts.md
-      - "Lesson 2.2: FastAPI Lifecycle, Pydantic v2 and Dependency Injection": 03-vol2-fastapi-backend/2.2-fastapi-lifecycle-pydantic-di.md
-      - "Lesson 2.3: SQL, Schema Design, Indexes and EXPLAIN": 03-vol2-fastapi-backend/2.3-sql-schema-indexes-explain.md
-      - "Lesson 2.4: Transactions, Isolation, Migrations and Pagination": 03-vol2-fastapi-backend/2.4-transactions-migrations-pagination.md
-      - "Lesson 2.5: AuthN, AuthZ, Passwords, JWT/OAuth Basics, Secrets": 03-vol2-fastapi-backend/2.5-authn-authz-passwords-secrets.md
-      - "Lesson 2.6: Async vs Blocking, Background Jobs, Retries, Idempotency": 03-vol2-fastapi-backend/2.6-async-background-jobs-idempotency.md
-      - "Lesson 2.7: Observability, Deployment, Health Checks, Timeouts (Capstone A prep)": 03-vol2-fastapi-backend/2.7-observability-deploy-reliability.md
-  - "Volume 3: PHP & Moodle":
-      - "Lesson 3.1: Modern PHP - Semantics, Types, OOP, Namespaces, Composer": 04-vol3-php-moodle/3.1-modern-php.md
-      - "Lesson 3.2: Moodle Architecture, Plugin Types and Plugin Anatomy": 04-vol3-php-moodle/3.2-moodle-architecture-and-plugins.md
-      - "Lesson 3.3: Capabilities, Contexts, Roles and Access Control": 04-vol3-php-moodle/3.3-capabilities-contexts-roles.md
-      - "Lesson 3.4: Forms API, Input Cleaning, Output API, Strings and the Database API": 04-vol3-php-moodle/3.4-forms-output-database-api.md
-      - "Lesson 3.5: Events, Tasks, Web Services, Caching, Files and Privacy": 04-vol3-php-moodle/3.5-events-tasks-webservices-files-privacy.md
-      - "Lesson 3.6: PHPUnit, Behat, Coding Style, Upgrades and Release (Capstone B Preparation)": 04-vol3-php-moodle/3.6-testing-style-upgrades.md
-  - "Volume 4: Engineering judgment":
-      - "Lesson 4.1: Architecture and Boundaries": 05-vol4-engineering/4.1-architecture-and-boundaries.md
-      - "Lesson 4.2: Testing Strategy, Code Review, and Refactoring Legacy Code": 05-vol4-engineering/4.2-testing-strategy-review-refactoring.md
-      - "Lesson 4.3: Security and Reliability": 05-vol4-engineering/4.3-security-and-reliability.md
-      - "Lesson 4.4: Performance Engineering Method": 05-vol4-engineering/4.4-performance-engineering-method.md
-  - "Volume 5: Modern C++":
-      - "Lesson 5.1: Build, Types, Lifetime, References, Const": 06-vol5-cpp/5.1-build-types-lifetime-const.md
-      - "Lesson 5.2: RAII, Copy/Move, Smart Pointers, Ownership": 06-vol5-cpp/5.2-raii-copy-move-smart-pointers.md
-      - "Lesson 5.3: STL, Iterators and Ranges, Lambdas, Templates, Concepts": 06-vol5-cpp/5.3-stl-lambdas-templates-concepts.md
-      - "Lesson 5.4: Data Structures and Algorithms with Invariants": 06-vol5-cpp/5.4-data-structures-and-algorithms.md
-      - "Lesson 5.5: Sanitizers, Undefined Behavior, Debugging and Profiling": 06-vol5-cpp/5.5-sanitizers-ub-debugging-profiling.md
-      - "Lesson 5.6: Cache Locality, Allocators, Concurrency and the Memory Model": 06-vol5-cpp/5.6-cache-allocators-concurrency-memory-model.md
-  - "Volume 6: Quant":
-      - "Lesson 6.1: Probability, Distributions, Expectation and Bayes": 07-vol6-quant/6.1-probability-and-distributions.md
-      - "Lesson 6.2: Linear Algebra, Calculus, Numerical Methods and Floating Point": 07-vol6-quant/6.2-linear-algebra-calculus-numerics.md
-      - "Lesson 6.3: Statistics, Regression, Time Series and Monte Carlo": 07-vol6-quant/6.3-statistics-timeseries-montecarlo.md
-      - "Lesson 6.4: Markets, Returns, Options, Black-Scholes, Risk": 07-vol6-quant/6.4-markets-returns-options-risk.md
-      - "Lesson 6.5: Backtesting, Bias, Costs, Order Books, Market Data": 07-vol6-quant/6.5-backtesting-orderbook-marketdata.md
-  - "Volume 7: Independence":
-      - "Lesson 7.1: AI Independence Program and Audits": 08-vol7-independence/7.1-ai-independence-and-audits.md
-      - "Lesson 7.2: Design Docs, ADRs, Estimation, Postmortems, Technical Defense": 08-vol7-independence/7.2-design-docs-adrs-postmortems.md
+      - "Continue in a new session": 00-front/CONTINUE-HERE.md
+      - "Verification status": 00-front/VERIFY-LIST.md
+  - "0 · Job readiness":
+      - "0.1  Day-one protocol": 01-vol0-job-readiness/0.1-day-one-protocol.md
+      - "0.2  Git workflow": 01-vol0-job-readiness/0.2-git-workflow.md
+      - "0.3  Debugging & failure log": 01-vol0-job-readiness/0.3-debugging-and-failure-log.md
+      - "0.4  Communication": 01-vol0-job-readiness/0.4-communication.md
+  - "1 · Python":
+      - "1.1  Python object model": 02-vol1-python/1.1-object-model.md
+      - "1.2  Iterators, generators, contexts": 02-vol1-python/1.2-iterators-generators-context-managers-exceptions.md
+      - "1.3  Types, packaging, logging": 02-vol1-python/1.3-types-packaging-config-logging.md
+      - "1.4  pytest & mocking": 02-vol1-python/1.4-pytest-fixtures-mocking.md
+  - "2 · FastAPI & backend":
+      - "2.1  HTTP, REST & contracts": 03-vol2-fastapi-backend/2.1-http-rest-contracts.md
+      - "2.2  FastAPI & Pydantic": 03-vol2-fastapi-backend/2.2-fastapi-lifecycle-pydantic-di.md
+      - "2.3  SQL & indexes": 03-vol2-fastapi-backend/2.3-sql-schema-indexes-explain.md
+      - "2.4  Transactions & pagination": 03-vol2-fastapi-backend/2.4-transactions-migrations-pagination.md
+      - "2.5  AuthN, AuthZ, secrets": 03-vol2-fastapi-backend/2.5-authn-authz-passwords-secrets.md
+      - "2.6  Async, jobs, idempotency": 03-vol2-fastapi-backend/2.6-async-background-jobs-idempotency.md
+      - "2.7  Observability & deploy": 03-vol2-fastapi-backend/2.7-observability-deploy-reliability.md
+  - "3 · PHP & Moodle":
+      - "3.1  Modern PHP": 04-vol3-php-moodle/3.1-modern-php.md
+      - "3.2  Moodle architecture": 04-vol3-php-moodle/3.2-moodle-architecture-and-plugins.md
+      - "3.3  Capabilities & roles": 04-vol3-php-moodle/3.3-capabilities-contexts-roles.md
+      - "3.4  Forms, output, DB API": 04-vol3-php-moodle/3.4-forms-output-database-api.md
+      - "3.5  Events, tasks, web services": 04-vol3-php-moodle/3.5-events-tasks-webservices-files-privacy.md
+      - "3.6  Testing & upgrades": 04-vol3-php-moodle/3.6-testing-style-upgrades.md
+  - "4 · Engineering judgment":
+      - "4.1  Architecture": 05-vol4-engineering/4.1-architecture-and-boundaries.md
+      - "4.2  Testing & refactoring": 05-vol4-engineering/4.2-testing-strategy-review-refactoring.md
+      - "4.3  Security & reliability": 05-vol4-engineering/4.3-security-and-reliability.md
+      - "4.4  Performance method": 05-vol4-engineering/4.4-performance-engineering-method.md
+  - "5 · Modern C++":
+      - "5.1  Build, types, lifetime": 06-vol5-cpp/5.1-build-types-lifetime-const.md
+      - "5.2  RAII & ownership": 06-vol5-cpp/5.2-raii-copy-move-smart-pointers.md
+      - "5.3  STL, lambdas, templates": 06-vol5-cpp/5.3-stl-lambdas-templates-concepts.md
+      - "5.4  Data structures & algorithms": 06-vol5-cpp/5.4-data-structures-and-algorithms.md
+      - "5.5  Sanitizers & debugging": 06-vol5-cpp/5.5-sanitizers-ub-debugging-profiling.md
+      - "5.6  Cache & concurrency": 06-vol5-cpp/5.6-cache-allocators-concurrency-memory-model.md
+  - "6 · Quant":
+      - "6.1  Probability": 07-vol6-quant/6.1-probability-and-distributions.md
+      - "6.2  Linear algebra & numerics": 07-vol6-quant/6.2-linear-algebra-calculus-numerics.md
+      - "6.3  Statistics & Monte Carlo": 07-vol6-quant/6.3-statistics-timeseries-montecarlo.md
+      - "6.4  Markets & options": 07-vol6-quant/6.4-markets-returns-options-risk.md
+      - "6.5  Backtesting & order books": 07-vol6-quant/6.5-backtesting-orderbook-marketdata.md
+  - "7 · Independence":
+      - "7.1  AI independence": 08-vol7-independence/7.1-ai-independence-and-audits.md
+      - "7.2  Design docs & postmortems": 08-vol7-independence/7.2-design-docs-adrs-postmortems.md
   - "Capstones":
-      - "Capstone A: Production Backend Service": capstones/capstone-A-production-backend.md
-      - "Capstone B: Moodle Plugin": capstones/capstone-B-moodle-plugin.md
-      - "Capstone C: High-Performance C++ Component": capstones/capstone-C-cpp-component.md
-      - "Capstone D: Quantitative Research System": capstones/capstone-D-quant-research.md
-      - "Capstone E: Cross-Language Integration": capstones/capstone-E-cross-language.md
+      - "A: Production backend": capstones/capstone-A-production-backend.md
+      - "B: Moodle plugin": capstones/capstone-B-moodle-plugin.md
+      - "C: C++ component": capstones/capstone-C-cpp-component.md
+      - "D: Quant research": capstones/capstone-D-quant-research.md
+      - "E: Cross-language": capstones/capstone-E-cross-language.md
   - "Templates":
       - "AI Output Audit Scorecard": 00-front/templates/AI-AUDIT-SCORECARD.md
       - "Failure Log": 00-front/templates/FAILURE-LOG.md
@@ -96,45 +111,45 @@ nav:
       - "Project Specification Template (14 fields)": 00-front/templates/PROJECT-SPEC-TEMPLATE.md
       - "Generic 100-Point Rubric (adapt per project)": 00-front/templates/RUBRIC.md
       - "Weekly Review Template": 00-front/templates/WEEKLY-REVIEW.md
-  - "Solutions (attempt first!)":
-      - "Solutions: Lesson 0.1, The Day-One Protocol": solutions/0.1-day-one-protocol-solutions.md
-      - "Solutions: Lesson 0.2, Git Workflow": solutions/0.2-git-workflow-solutions.md
-      - "Solutions: Lesson 0.3, Debugging Method and the Failure Log": solutions/0.3-debugging-and-failure-log-solutions.md
-      - "Solutions: Lesson 0.4, Communication": solutions/0.4-communication-solutions.md
-      - "Lesson 1.1 Solutions: The Python Object Model": solutions/1.1-object-model-solutions.md
-      - "Lesson 1.2 Solutions: Iterators, Generators, Context Managers, Exceptions": solutions/1.2-iterators-generators-context-managers-exceptions-solutions.md
-      - "Lesson 1.3 Solutions: Types, Packaging, Configuration, Logging": solutions/1.3-types-packaging-config-logging-solutions.md
-      - "Lesson 1.4 Solutions: pytest, Fixtures, Mocking": solutions/1.4-pytest-fixtures-mocking-solutions.md
-      - "Solutions: Lesson 2.1 HTTP, REST and API Contracts": solutions/2.1-http-rest-contracts-solutions.md
-      - "Solutions: Lesson 2.2 FastAPI Lifecycle, Pydantic v2 and Dependency Injection": solutions/2.2-fastapi-lifecycle-pydantic-di-solutions.md
-      - "Solutions: Lesson 2.3 SQL, Schema Design, Indexes and EXPLAIN": solutions/2.3-sql-schema-indexes-explain-solutions.md
-      - "Solutions: Lesson 2.4 Transactions, Isolation, Migrations and Pagination": solutions/2.4-transactions-migrations-pagination-solutions.md
-      - "Solutions 2.5: AuthN, AuthZ, Passwords, JWT/OAuth Basics, Secrets": solutions/2.5-authn-authz-passwords-secrets-solutions.md
-      - "Solutions 2.6: Async vs Blocking, Background Jobs, Retries, Idempotency": solutions/2.6-async-background-jobs-idempotency-solutions.md
-      - "Solutions 2.7: Observability, Deployment, Health Checks, Timeouts": solutions/2.7-observability-deploy-reliability-solutions.md
-      - "Solutions: Lesson 3.1 Modern PHP": solutions/3.1-modern-php-solutions.md
-      - "Solutions: Lesson 3.2 Moodle Architecture and Plugins": solutions/3.2-moodle-architecture-and-plugins-solutions.md
-      - "Solutions: Lesson 3.3 Capabilities, Contexts, Roles": solutions/3.3-capabilities-contexts-roles-solutions.md
-      - "Solutions: Lesson 3.4 (Forms, Output, Strings, Database API)": solutions/3.4-forms-output-database-api-solutions.md
-      - "Solutions: Lesson 3.5 (Events, Tasks, Web Services, MUC, Files, Privacy)": solutions/3.5-events-tasks-webservices-files-privacy-solutions.md
-      - "Solutions: Lesson 3.6 (PHPUnit, Behat, Style, Upgrades, Release)": solutions/3.6-testing-style-upgrades-solutions.md
-      - "Solutions: Lesson 4.1 Architecture and Boundaries": solutions/4.1-architecture-and-boundaries-solutions.md
-      - "Solutions: Lesson 4.2 Testing Strategy, Code Review, and Refactoring Legacy Code": solutions/4.2-testing-strategy-review-refactoring-solutions.md
-      - "Solutions: Lesson 4.3 Security and Reliability": solutions/4.3-security-and-reliability-solutions.md
-      - "Solutions: Lesson 4.4 Performance Engineering Method": solutions/4.4-performance-engineering-method-solutions.md
-      - "Solutions: Lesson 5.1 (Build, Types, Lifetime, References, Const)": solutions/5.1-build-types-lifetime-const-solutions.md
-      - "Solutions: Lesson 5.2 (RAII, Copy/Move, Smart Pointers, Ownership)": solutions/5.2-raii-copy-move-smart-pointers-solutions.md
-      - "Solutions: Lesson 5.3 (STL, Iterators and Ranges, Lambdas, Templates, Concepts)": solutions/5.3-stl-lambdas-templates-concepts-solutions.md
-      - "Solutions 5.4: Data Structures and Algorithms with Invariants": solutions/5.4-data-structures-and-algorithms-solutions.md
-      - "Solutions 5.5: Sanitizers, Undefined Behavior, Debugging and Profiling": solutions/5.5-sanitizers-ub-debugging-profiling-solutions.md
-      - "Solutions 5.6: Cache Locality, Allocators, Concurrency and the Memory Model": solutions/5.6-cache-allocators-concurrency-memory-model-solutions.md
-      - "Solutions for Lesson 6.1: Probability, Distributions, Expectation and Bayes": solutions/6.1-probability-and-distributions-solutions.md
-      - "Solutions for Lesson 6.2: Linear Algebra, Calculus, Numerical Methods and Floating Point": solutions/6.2-linear-algebra-calculus-numerics-solutions.md
-      - "Solutions for Lesson 6.3: Statistics, Regression, Time Series and Monte Carlo": solutions/6.3-statistics-timeseries-montecarlo-solutions.md
-      - "Solutions: Lesson 6.4 Markets, Returns, Options, Black-Scholes, Risk": solutions/6.4-markets-returns-options-risk-solutions.md
-      - "Solutions: Lesson 6.5 Backtesting, Bias, Costs, Order Books, Market Data": solutions/6.5-backtesting-orderbook-marketdata-solutions.md
-      - "Solutions: Lesson 7.1 AI Independence Program and Audits": solutions/7.1-ai-independence-and-audits-solutions.md
-      - "Solutions: Lesson 7.2 Design Docs, ADRs, Estimation, Postmortems, Technical Defense": solutions/7.2-design-docs-adrs-postmortems-solutions.md
-      - "Diagnostic Answer Key and Grading Guide": 00-front/DIAGNOSTIC-ANSWER-KEY.md
+  - "Solutions (attempt first)":
+      - "0.1  Day-one protocol": solutions/0.1-day-one-protocol-solutions.md
+      - "0.2  Git workflow": solutions/0.2-git-workflow-solutions.md
+      - "0.3  Debugging & failure log": solutions/0.3-debugging-and-failure-log-solutions.md
+      - "0.4  Communication": solutions/0.4-communication-solutions.md
+      - "1.1  Python object model": solutions/1.1-object-model-solutions.md
+      - "1.2  Iterators, generators, contexts": solutions/1.2-iterators-generators-context-managers-exceptions-solutions.md
+      - "1.3  Types, packaging, logging": solutions/1.3-types-packaging-config-logging-solutions.md
+      - "1.4  pytest & mocking": solutions/1.4-pytest-fixtures-mocking-solutions.md
+      - "2.1  HTTP, REST & contracts": solutions/2.1-http-rest-contracts-solutions.md
+      - "2.2  FastAPI & Pydantic": solutions/2.2-fastapi-lifecycle-pydantic-di-solutions.md
+      - "2.3  SQL & indexes": solutions/2.3-sql-schema-indexes-explain-solutions.md
+      - "2.4  Transactions & pagination": solutions/2.4-transactions-migrations-pagination-solutions.md
+      - "2.5  AuthN, AuthZ, secrets": solutions/2.5-authn-authz-passwords-secrets-solutions.md
+      - "2.6  Async, jobs, idempotency": solutions/2.6-async-background-jobs-idempotency-solutions.md
+      - "2.7  Observability & deploy": solutions/2.7-observability-deploy-reliability-solutions.md
+      - "3.1  Modern PHP": solutions/3.1-modern-php-solutions.md
+      - "3.2  Moodle architecture": solutions/3.2-moodle-architecture-and-plugins-solutions.md
+      - "3.3  Capabilities & roles": solutions/3.3-capabilities-contexts-roles-solutions.md
+      - "3.4  Forms, output, DB API": solutions/3.4-forms-output-database-api-solutions.md
+      - "3.5  Events, tasks, web services": solutions/3.5-events-tasks-webservices-files-privacy-solutions.md
+      - "3.6  Testing & upgrades": solutions/3.6-testing-style-upgrades-solutions.md
+      - "4.1  Architecture": solutions/4.1-architecture-and-boundaries-solutions.md
+      - "4.2  Testing & refactoring": solutions/4.2-testing-strategy-review-refactoring-solutions.md
+      - "4.3  Security & reliability": solutions/4.3-security-and-reliability-solutions.md
+      - "4.4  Performance method": solutions/4.4-performance-engineering-method-solutions.md
+      - "5.1  Build, types, lifetime": solutions/5.1-build-types-lifetime-const-solutions.md
+      - "5.2  RAII & ownership": solutions/5.2-raii-copy-move-smart-pointers-solutions.md
+      - "5.3  STL, lambdas, templates": solutions/5.3-stl-lambdas-templates-concepts-solutions.md
+      - "5.4  Data structures & algorithms": solutions/5.4-data-structures-and-algorithms-solutions.md
+      - "5.5  Sanitizers & debugging": solutions/5.5-sanitizers-ub-debugging-profiling-solutions.md
+      - "5.6  Cache & concurrency": solutions/5.6-cache-allocators-concurrency-memory-model-solutions.md
+      - "6.1  Probability": solutions/6.1-probability-and-distributions-solutions.md
+      - "6.2  Linear algebra & numerics": solutions/6.2-linear-algebra-calculus-numerics-solutions.md
+      - "6.3  Statistics & Monte Carlo": solutions/6.3-statistics-timeseries-montecarlo-solutions.md
+      - "6.4  Markets & options": solutions/6.4-markets-returns-options-risk-solutions.md
+      - "6.5  Backtesting & order books": solutions/6.5-backtesting-orderbook-marketdata-solutions.md
+      - "7.1  AI independence": solutions/7.1-ai-independence-and-audits-solutions.md
+      - "7.2  Design docs & postmortems": solutions/7.2-design-docs-adrs-postmortems-solutions.md
+      - "Diagnostic answer key": 00-front/DIAGNOSTIC-ANSWER-KEY.md
 exclude_docs: |
   00-front/STYLE-GUIDE.md
