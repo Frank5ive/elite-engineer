@@ -8,7 +8,7 @@
 - Award partial credit as indicated. A correct answer with a wrong explanation earns at most half.
 - For coding items: run them. Code that was not run, or that fails its own test, caps at 50% of the item. Items marked LOOKED UP score zero.
 - Self-grading bias is real. If grading yourself, be strict, and where unsure give the lower score; then ask for an independent grading in a continuation session (CONTINUE-HERE.md), which should be told the answer files only, not your estimate.
-- Where the key marks a version-dependent fact, VERIFY it in official docs when it matters.
+- Where the key marks a version-dependent fact, check it in official docs when it matters.
 - Record per-item scores in `progress/diagnostic/scores.md`, with a one-line note on every missed item stating the underlying gap (this feeds remediation exercises).
 
 ---
@@ -71,7 +71,7 @@ def create_item(item: Item):
     items[item.name] = item
     return item
 ```
-Default validation failure status: 422. Scoring: 1 model with constraints (v2 syntax: `field_validator`, `Field(gt=0)`; v1 `@validator` or `constr` usage with v2 mismatch loses half), 1 correct 201, 1 correct 409, 1 correct 422 statement and working code. Valid alternatives: `Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=50)]` (Pydantic v2; VERIFY name in docs); `Decimal` for price (a good answer, mention that money should not be float); a lock or note about thread-safety of the shared dict (bonus remark, no points).
+Default validation failure status: 422. Scoring: 1 model with constraints (v2 syntax: `field_validator`, `Field(gt=0)`; v1 `@validator` or `constr` usage with v2 mismatch loses half), 1 correct 201, 1 correct 409, 1 correct 422 statement and working code. Valid alternatives: `Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=50)]` (Pydantic v2; `from pydantic import StringConstraints` imports on Pydantic 2.14, checked); `Decimal` for price (a good answer, mention that money should not be float); a lock or note about thread-safety of the shared dict (bonus remark, no points).
 
 **A8 (3).** `def` endpoints run in a threadpool, so blocking calls do not stop the event loop (up to the pool size); `async def` endpoints run on the event loop, so a blocking call stops all other requests handled by that loop for its duration. Fixes: use `await asyncio.sleep` or an async client/driver; or declare the endpoint with `def`; or `run_in_threadpool` / `anyio.to_thread.run_sync`; or move to a background worker. 1 + 1 + 1 (two fixes needed for the last point).
 
@@ -130,7 +130,7 @@ LIMIT 3;
 
 **B3 (2).** `WHERE` filters rows before aggregation; `HAVING` filters groups after aggregation. `status = NULL` evaluates to unknown, so it returns no rows; use `IS NULL`. 1 + 1.
 
-**B4 (3).** Index `(course_id, status, enrolled_at DESC)` (or `(course_id, status, enrolled_at)` since a b-tree can be read backward; the database may also be able to use `student_id` as an included column for an index-only scan; VERIFY on your engine). Reason: equality columns first, then the ordering column so the order is served by the index and `LIMIT 20` stops early. Confirm with `EXPLAIN (ANALYZE, BUFFERS)` looking for an index scan without a separate sort, and a low actual row count. 1 index, 1 reasoning, 1 verification step. A partial index on `status = 'active'` is a valid, better-for-this-query alternative and earns the reasoning point if justified.
+**B4 (3).** Index `(course_id, status, enrolled_at DESC)` (or `(course_id, status, enrolled_at)` since a b-tree can be read backward; PostgreSQL 11+ can add `student_id` as a `INCLUDE` column for an index-only scan; other engines differ). Reason: equality columns first, then the ordering column so the order is served by the index and `LIMIT 20` stops early. Confirm with `EXPLAIN (ANALYZE, BUFFERS)` looking for an index scan without a separate sort, and a low actual row count. 1 index, 1 reasoning, 1 verification step. A partial index on `status = 'active'` is a valid, better-for-this-query alternative and earns the reasoning point if justified.
 
 **B5 (3).** A sequential scan reads about a million rows to return 15; no usable index on `student_id`. Actions: (1) create an index on `enrollments(student_id)` (concurrently on a production table; check lock behavior), (2) rerun `EXPLAIN ANALYZE` and confirm the plan changed and the rows removed dropped, (3) check statistics (`ANALYZE`) and whether the query is frequent enough to justify the write cost of the index. Note that the composite primary key `(student_id, course_id)` in the schema above already has `student_id` as its leading column, so an index likely exists in this schema; award a bonus remark if the answerer notices that and says the plan in the question implies the schema differs (the excerpt is illustrative). 1 diagnosis, 1 fix, 1 verification or cost awareness.
 
@@ -149,7 +149,7 @@ LIMIT 20;
 
 ## Section C (20)
 
-**C1 (2).** `bool(false)`, `bool(true)`, `string(1) "x"`. In PHP 8, `0 == "a"` is false (numeric strings are compared as numbers; non-numeric strings compare with the number as string). `"1" == "01"` is true (both numeric strings). 0.5 + 0.5 + 1 distribution: 0.5 for each of the first two, 1 for the third. VERIFY against the PHP 8 comparison table at php.net if disputing.
+**C1 (2).** `bool(false)`, `bool(true)`, `string(1) "x"`. In PHP 8, `0 == "a"` is false (numeric strings are compared as numbers; non-numeric strings compare with the number as string). `"1" == "01"` is true (both numeric strings). 0.5 + 0.5 + 1 distribution: 0.5 for each of the first two, 1 for the third. Checked by running PHP 8.4.27: `var_dump(0 == "a")` gives `bool(false)` and `var_dump("1" == "01")` gives `bool(true)`; the third line prints `string(1) "x"`. See the PHP 8 comparison table at php.net if disputing.
 
 **C2 (2).**
 ```php
@@ -235,7 +235,7 @@ public:
 
 **E4 (2).** `unique_ptr` for exclusive ownership (default); `shared_ptr` only when ownership is genuinely shared and lifetimes cannot be nested simply (and consider the cost and cycle risk, `weak_ptr`); raw pointers or references for non-owning observation where the pointee outlives the use. 1 + 1.
 
-**E5 (3).** Vector insert at front O(n); `unordered_map` lookup average O(1), worst O(n); `std::map` O(log n); `std::sort` O(n log n) comparisons (worst case O(n log n) is required by the standard since C++11 for `std::sort`; VERIFY on cppreference); `deque::push_front` amortized O(1) (constant time). 0.6 each.
+**E5 (3).** Vector insert at front O(n); `unordered_map` lookup average O(1), worst O(n); `std::map` O(log n); `std::sort` O(n log n) comparisons (the worst-case O(n log n) requirement for `std::sort` applies since C++11 via LWG 713; cppreference notes that earlier wording allowed quicksort with O(n^2) worst case, and that libc++ only implemented the corrected requirement in LLVM 14); `deque::push_front` amortized O(1) (constant time). 0.6 each.
 
 **E6 (4).** Reference approach: hash map from value to index; for each `j`, look up `target - a[j]`; return `(i, j)` if found, else insert `a[j]`. O(n) expected time, O(n) space. Duplicates handled because lookup precedes insertion (e.g. `[3, 3]`, target 6). Failure modes or assumptions: integer overflow of `target - a[j]` for extreme values (use wider type), hash worst case O(n^2) under adversarial input, multiple valid answers (state which is returned). 1 correct algorithm, 1 handles duplicates and negatives with tests, 1 stated complexity, 1 stated failure mode. Code not run: cap at 2.
 

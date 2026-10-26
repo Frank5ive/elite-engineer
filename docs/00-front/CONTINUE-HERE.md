@@ -105,8 +105,8 @@ Today I want you to: [CHOOSE ONE AND DELETE THE REST]
 - Keep a backup of `progress/` (it is the only irreplaceable part). Version control it privately.
 - If this folder is moved, update the root path in the continuation prompt.
 
-## Status at generation (2026-10-26)
-- All 38 lessons (0.1-7.2), 38 solutions files, 5 capstones, front matter and templates are written.
-- Most lessons exceed the 3,000-5,000 word target (5,000-8,300 raw words including code). Trim or split if wanted; 3.4 (8,300) is the first candidate.
-- `00-front/VERIFY-LIST.md` lists every unverified claim. Moodle items (Vol 3) are drafts: nothing there was run against a live Moodle. Verify against moodledev.io for your actual version before relying on them.
-- Not run anywhere: FastAPI snippets in 0.1, Dockerfile in 2.7, clang/gdb/perf/valgrind commands, PHPUnit files, 1.4 project suite.
+## Status (2026-10-26)
+- All 38 lessons (0.1-7.2), 38 solutions files, 5 capstones, front matter and templates are written and published at https://frank5ive.github.io/elite-engineer/ (source: github.com/Frank5ive/elite-engineer).
+- A verification pass checked ~500 claims against primary sources and by running code. Many were corrected. See `00-front/VERIFY-LIST.md` for the remaining gaps.
+- Moodle (Vol 3) was verified against Moodle source, not a live install: run the labs on your actual Moodle version.
+- Lessons are still over the word target; lesson 3.4 (about 8,300 words) is the first trim candidate.

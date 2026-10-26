@@ -6,7 +6,7 @@
 | Mode | Build: A/B. C allowed only for build-system boilerplate, disclosed. Defense and reconstruction: A. |
 | Time budget | 45-80 hours over 4-6 weeks, including profiling and sanitizer debugging. |
 | Prerequisites (lessons) | 0.1, 0.2, 0.3, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 4.2, 4.4. Helpful: 6.2 (floating point), 6.5 (market data), 7.2. |
-| Minimum versions | C++20 (flag any C++23 use explicitly), CMake 3.20+ (VERIFY), GCC 12+ or Clang 15+ (VERIFY what you have), Catch2 or GoogleTest, Google Benchmark or a hand-written harness. |
+| Minimum versions | C++20 (flag any C++23 use explicitly), CMake 3.20+ (the minimum for preset schema version 2 with test presets, per the CMake presets manual), GCC 12+ or Clang 15+ (check what you have with `--version`), Catch2 or GoogleTest, Google Benchmark or a hand-written harness. |
 | Deliverable | A library with a stable public header API, tests, sanitizer and fuzz/property runs, benchmarks with methodology, a profile-driven optimization report, design doc, and a defense. |
 
 Attempt first. Reference notes: `../solutions/` after submission only.
@@ -41,10 +41,10 @@ If you prefer, substitute another component of equal depth (a fixed-capacity rin
 - **Data structure decision (5.4):** You must choose, justify and compare at least two designs for the price-level container and the order storage. Examples: a sorted map of levels versus a flat array indexed by price offset from a reference price; intrusive doubly-linked list per level versus a contiguous vector per level with tombstones. Implement the simpler one first as the **reference implementation** (also used as a test oracle), then the optimized one. The oracle is required: differential testing between the two is the core of the testing strategy.
 - **Ownership (5.2):** Document who owns each order object, where it lives, what the lifetime is, and how a cancel invalidates handles. Prefer indices or generation-checked handles to raw pointers into containers that can reallocate. Rule of zero where possible; if you write special members, state the rule of five reasoning.
 - **Memory (5.6):** Choose and justify the allocation strategy: pool/slab of order nodes, arena per session, or the default allocator. A custom allocator is not mandatory and not automatically better; measure it. If you pool, define behavior on exhaustion (reject with a reason, grow, or abort) and test it.
-- **Layout (5.6):** Show the layout of your hot structs (use `static_assert` on `sizeof`/`alignof` only where you rely on it; VERIFY that these assertions are portable to the compilers you support before committing to them). Explain at least one decision made for cache behavior and one you declined to make for lack of evidence.
+- **Layout (5.6):** Show the layout of your hot structs (use `static_assert` on `sizeof`/`alignof` only where you rely on it; `sizeof` and `alignof` of your structs can differ across compilers and ABIs, so build the assertions on each compiler you support before committing to them). Explain at least one decision made for cache behavior and one you declined to make for lack of evidence.
 - **Types (5.3):** Strong types for price, quantity, order id (distinct types, no implicit conversion between them). Use concepts or constrained templates only where they simplify; do not template everything.
 - **Interface:** A command is a small value type; output is delivered through a caller-supplied sink (a template parameter, `std::function`, or an abstract interface; justify the cost of whichever you pick and measure it if the choice matters).
-- **Build (5.1):** CMake targets for the library, tests, benchmarks, sanitizer presets, and a warning policy (`-Wall -Wextra -Wpedantic` plus `-Werror` in CI; VERIFY flag spellings for your compiler). `compile_commands.json` generation documented. No dependency beyond the test and benchmark frameworks.
+- **Build (5.1):** CMake targets for the library, tests, benchmarks, sanitizer presets, and a warning policy (`-Wall -Wextra -Wpedantic` plus `-Werror` in CI; these spellings are GCC/Clang, MSVC uses `/W4 /WX`). `compile_commands.json` generation documented. No dependency beyond the test and benchmark frameworks.
 
 ## 3. Milestones with checkpoints
 
@@ -66,7 +66,7 @@ If you prefer, substitute another component of equal depth (a fixed-capacity rin
 2. The optimized implementation and the reference implementation produce identical output on at least one million randomized commands across at least ten distinct seeds, including adversarial shapes (all cancels, one deep level, alternating cross, empty-book churn).
 3. Determinism: two runs, and two builds (for example GCC and Clang, if both available), produce identical output hashes for the same input file. If a platform difference exists, you can explain it.
 4. `verify()` passes after every command in the debug-mode randomized test.
-5. Resource safety: constructing and destroying the book repeatedly shows no leaks (sanitizer or valgrind-equivalent; VERIFY availability) and handles exhaustion deterministically.
+5. Resource safety: constructing and destroying the book repeatedly shows no leaks (sanitizer or valgrind; both checked to report leaks and uninitialized reads on Ubuntu 24.04) and handles exhaustion deterministically.
 6. Every public function has documented preconditions; violating a precondition in a debug build fails loudly (assert or contract check), and in release behaves as documented.
 7. The benchmark is reproducible by a stranger from the README alone.
 
@@ -74,8 +74,8 @@ If you prefer, substitute another component of equal depth (a fixed-capacity rin
 
 - **Example-based tests** for each documented semantic: price-time priority across levels, partial fills across multiple resting orders, IOC remainder discarded, cancel of a filled order is rejected, modify branches.
 - **Property tests / randomized differential testing:** generate command sequences from a seeded RNG; always log the seed; shrink failing sequences manually or by a small shrinker you write (halving the sequence is enough) so failures are debuggable.
-- **Fuzzing:** a libFuzzer-style or AFL-style harness over a byte-stream decoder that turns bytes into commands (VERIFY toolchain support for your compiler). Run time stated. The corpus is committed if small.
-- **Sanitizers:** ASan, UBSan always; TSan if any concurrency; MSan optional (VERIFY platform support).
+- **Fuzzing:** a libFuzzer-style or AFL-style harness over a byte-stream decoder that turns bytes into commands (libFuzzer needs clang: `-fsanitize=fuzzer,address` checked with clang 18; GCC has no libFuzzer, use AFL++ or a plain randomized driver there). Run time stated. The corpus is committed if small.
+- **Sanitizers:** ASan, UBSan always; TSan if any concurrency; MSan optional (clang only; checked with clang 18 on Linux x86-64, and results depend on the optimization level).
 - **Mutation spot check:** deliberately reintroduce five bugs (off-by-one in a fill quantity, wrong side comparison, priority loss on modify-down, stale index after cancel, missed level erase) and record which tests catch each.
 - **Allocation test** if you claim a no-allocation hot path.
 - **Failure laboratory discipline (5.5):** for each sanitizer-detected defect you actually hit, a failure log entry with the diagnostic, root cause, and regression test. If you hit none, say so, and explain why you believe that is true rather than lucky.
@@ -92,9 +92,9 @@ You are not given a target number. A claim about speed in this capstone is valid
 
 1. **Workload definition:** the command mix (for example proportions of add/cancel/modify/cross), price distribution, book depth, and why that is a defensible model. Label it a synthetic assumption. Include at least two distinct mixes; an optimization that helps one and hurts another must be reported as such.
 2. **Environment:** CPU model, core pinning if used, frequency governor state, compiler and version, flags, OS. Mention noise sources you did not control.
-3. **Method:** warm-up, a number of repetitions, reporting median and a spread measure (min/max or interquartile range), not a single run. Prevent the compiler from deleting the work (use the benchmark library's facility to prevent optimization of results; VERIFY the API name) and verify by inspecting that outputs are consumed.
+3. **Method:** warm-up, a number of repetitions, reporting median and a spread measure (min/max or interquartile range), not a single run. Prevent the compiler from deleting the work (use the benchmark library's facility, `benchmark::DoNotOptimize` in Google Benchmark 1.8.3) and verify by inspecting that outputs are consumed.
 4. **Metrics:** throughput (commands per second) and latency distribution per command including tail percentiles; state clearly how latency was timed and the timer overhead.
-5. **Profile before optimizing:** a sampling profile and, if the hardware permits, counters for cache misses and branch mispredictions (VERIFY tool availability: `perf`, VTune, or equivalents). Every optimization cites the profile evidence that motivated it.
+5. **Profile before optimizing:** a sampling profile and, if the hardware permits, counters for cache misses and branch mispredictions (`perf`, VTune, or equivalents; `perf` may be denied permission to count events in containers, as observed). Every optimization cites the profile evidence that motivated it.
 6. **Keep/revert rule:** an optimization is kept only if the improvement exceeds the run-to-run spread on the relevant workloads and does not damage correctness or readability disproportionately. Reverted attempts are reported as findings.
 7. **Complexity versus constants:** show a scaling run (book depth versus time per command) that matches or contradicts your complexity table.
 8. **Limits of the claim:** state what the benchmark does not show: real network jitter, contention, cold caches in production, realistic order flow.

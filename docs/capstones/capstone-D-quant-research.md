@@ -6,7 +6,7 @@
 | Mode | Build: A/B for core math and engine; C allowed for plotting and boilerplate with disclosure. Defense and reconstruction: A. |
 | Time budget | 50-90 hours over 5-8 weeks, including statistical analysis and writing. |
 | Prerequisites (lessons) | 0.3, 1.1-1.4, 6.1, 6.2, 6.3, 6.4, 6.5, 4.2, 4.4. Helpful: 5.3, 5.4 (if a C++ kernel is used), 7.2. |
-| Minimum versions | Python 3.12, NumPy, pandas, SciPy (VERIFY current versions and pin them), pytest. Optional C++20 kernel (Capstone C techniques). |
+| Minimum versions | Python 3.12, NumPy, pandas, SciPy (record the versions you used from `pip freeze` and pin them), pytest. Optional C++20 kernel (Capstone C techniques). |
 | Deliverable | A reproducible research repository: data pipeline, backtest engine, risk and cost model, statistical validation, a written research report with a limitations section, tests, and a defense. |
 
 Attempt first. Reference notes: `../solutions/` after submission only.
@@ -37,7 +37,7 @@ The system consists of five parts: **data layer** (ingest, clean, adjust, store,
 
 ### 1.2 Statistical requirements (6.1-6.3)
 
-- Report point estimates **with uncertainty**: confidence intervals via a method suited to autocorrelated financial series (for example a block bootstrap; VERIFY the method and the block-length rationale; do not use iid assumptions silently), and a plain statement of which assumptions each interval relies on.
+- Report point estimates **with uncertainty**: confidence intervals via a method suited to autocorrelated financial series (for example the moving-block bootstrap of Kuensch, 1989, or the stationary bootstrap of Politis and Romano, 1994; choose the block length from how fast the autocorrelation decays, show the interval for several block lengths, and do not use iid assumptions silently), and a plain statement of which assumptions each interval relies on.
 - **Multiple testing accounting:** count every variant you tried (parameters, universes, filters, windows), including abandoned ones, in a research log. Apply and describe an adjustment or at minimum report the number of trials and explain how it inflates the best result's apparent significance. Hiding failed trials is a critical failure.
 - **Out-of-sample protocol:** a holdout period (or walk-forward scheme) fixed before analysis and touched once per final model. Describe exactly how you prevented yourself from peeking; a record of the number of times the holdout was evaluated is required.
 - **Regime and stability:** results split by sub-period and, where meaningful, by volatility regime, reported as is, including unfavorable sub-periods.
@@ -92,7 +92,7 @@ M5 is the center of the capstone: a pipeline that finds "significant" edge in pu
 
 ## 6. Security and reliability expectations (4.3)
 
-Defensive scope only. Data files are untrusted inputs: validate schema and ranges, do not `eval` or unpickle untrusted files (use CSV/Parquet with explicit dtypes; VERIFY the loader's behavior), and do not store API keys in the repository. Reproducibility is the reliability property of a research system: pinned dependencies, recorded seeds, immutable snapshots, deterministic ordering, and an explicit statement of any nondeterminism (parallel reductions, library thread counts). The pipeline fails loudly on data problems rather than silently dropping rows; every dropped row is counted in a data-quality report.
+Defensive scope only. Data files are untrusted inputs: validate schema and ranges, do not `eval` or unpickle untrusted files (use CSV/Parquet with explicit dtypes; the pandas documentation warns that `read_pickle` must never be used on untrusted data; test your loader with a malformed file), and do not store API keys in the repository. Reproducibility is the reliability property of a research system: pinned dependencies, recorded seeds, immutable snapshots, deterministic ordering, and an explicit statement of any nondeterminism (parallel reductions, library thread counts). The pipeline fails loudly on data problems rather than silently dropping rows; every dropped row is counted in a data-quality report.
 
 ## 7. Performance criteria (methodology only)
 

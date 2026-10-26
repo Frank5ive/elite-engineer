@@ -6,7 +6,7 @@
 | Mode | Build: A/B for plugin logic; C permitted for boilerplate with disclosure. Defense and reconstruction: A. |
 | Time budget | 35-60 hours over 3-4 weeks, including testing and upgrade work. |
 | Prerequisites (lessons) | 0.1, 0.2, 0.3, 0.4, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 4.1, 4.2, 4.3. Helpful: 2.1, 2.3, 7.2. |
-| Minimum versions | PHP 8.2+; a supported Moodle release. Pin one exact release (for example a current LTS) and write it down. VERIFY supported releases and their PHP requirements at moodledev.io before starting. |
+| Minimum versions | PHP 8.2+ for the book baseline; a supported Moodle release. Pin one exact release and write it down. As of 2026-10-26 (moodledev.io/general/releases and release notes): 5.3 (current, LTS-labelled; PHP 8.3.0+), 5.2 (PHP 8.3.0+), 5.1 (PHP 8.2.0+; code under `public/`), 4.5 LTS (PHP 8.1.0+; security fixes to 4 Oct 2027). Re-check before starting. |
 | Deliverable | An installable plugin (zip and repository), PHPUnit and Behat suites, an upgrade path test, a privacy provider, a design doc, and a technical defense. |
 
 Attempt first. Reference notes: `../solutions/` after submission only.
@@ -33,7 +33,7 @@ The plugin type is your decision and must be justified in an ADR (3.2). Defensib
 ### 1.2 Non-functional requirements
 
 - **No core modification.** Everything lives in the plugin directory. If you believe core must change, that is a finding to document, not a patch to ship.
-- Coding style conforming to Moodle's PHP coding style; run the style checker your release documents (VERIFY: moodle-plugin-ci or phpcs with Moodle standard).
+- Coding style conforming to Moodle's PHP coding style; run the style checker your release documents (moodle-plugin-ci `phpcs`, or plain phpcs with the `moodle` or `moodle-extra` standard from `moodlehq/moodle-cs`).
 - All user-facing strings in language files; none hard-coded.
 - Capabilities defined with sensible archetype defaults and risk bitmasks as appropriate; no role-name checks (checking for a role shortname instead of a capability is a defect).
 - Backup and restore support if you chose `mod_`; if `local_`, a written statement that user data is excluded from course backup and why.
@@ -101,7 +101,7 @@ The plugin type is your decision and must be justified in an ADR (3.2). Defensib
 
 Moodle performance is dominated by database queries per page and by memory in batch code. Required:
 
-1. Use the site's performance information footer and/or query logging of your release (VERIFY the exact setting names in the admin docs) to count queries and measure page time on the submission list for a course with a seeded dataset of stated size. Record the dataset size generator and your assumption of realistic scale.
+1. Use the site's performance information footer and/or query logging of your release (the "Performance info" admin setting `perfdebug` under Site administration > Development > Debugging, plus the developer-debug query display; confirm the labels on your release) to count queries and measure page time on the submission list for a course with a seeded dataset of stated size. Record the dataset size generator and your assumption of realistic scale.
 2. Identify any N+1 pattern (a query per row) and remove it with a join or an IN-set load; show queries-per-page before and after. Query count is a more portable measurement than milliseconds; report both with the environment.
 3. For the scheduled task, measure peak memory with a stated batch size and show it does not grow with row count.
 4. Run each measurement at least three times; report spread. Do not quote numbers you did not measure and do not assume your laptop dataset reflects production.
