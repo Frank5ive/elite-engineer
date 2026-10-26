@@ -293,6 +293,7 @@ Score each section with the answer key. Convert to a percentage per section (`se
 **Section-to-volume mapping:** A -> Vol 1 and 2.2, 2.6, 2.7; B -> 2.3, 2.4; C -> Vol 3; D -> Vol 0, 1.4, Vol 4; E -> Vol 5; F -> 6.1-6.3; G -> 6.4-6.5.
 
 **Overrides:**
+
 - Vol 0 (job readiness) is P0 and is always done in the first week regardless of score; its gates can be passed quickly.
 - If your calibration error (predicted minus actual) exceeds 20 percentage points in a section, treat that section's route as one level more cautious and prefer Mode A retests.
 - If your job is primarily Moodle/PHP, move Vol 3 forward as described in `ROADMAP.md` regardless of Section C, unless Section C is 85% or higher.

@@ -12,7 +12,20 @@ theme:
       scheme: slate
       primary: indigo
       toggle: {icon: material/weather-sunny, name: Light mode}
-markdown_extensions: [tables, admonition, pymdownx.details, pymdownx.superfences, pymdownx.highlight, toc: {permalink: true}, attr_list]
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - sane_lists
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
 plugins: [search]
 extra_javascript: [assets/progress.js]
 extra_css: [assets/progress.css]
@@ -123,3 +136,5 @@ nav:
       - "Solutions: Lesson 7.1 AI Independence Program and Audits": solutions/7.1-ai-independence-and-audits-solutions.md
       - "Solutions: Lesson 7.2 Design Docs, ADRs, Estimation, Postmortems, Technical Defense": solutions/7.2-design-docs-adrs-postmortems-solutions.md
       - "Diagnostic Answer Key and Grading Guide": 00-front/DIAGNOSTIC-ANSWER-KEY.md
+exclude_docs: |
+  00-front/STYLE-GUIDE.md

@@ -9,20 +9,25 @@ quality of his work, never insulting. No filler, no motivational speeches, no re
 - One lesson = one Markdown file: `<folder>/<NN.M>-<slug>.md` (e.g. `02-vol1-python/1.1-object-model.md`).
 - Reference solutions go in `/home/frank/Documents/engineering-book/solutions/<NN.M>-<slug>-solutions.md`,
   NEVER inside the lesson file. The lesson file must say "Attempt first. Solutions: ../solutions/...".
+
 - Start each lesson with YAML-ish header lines:
   `# Lesson X.Y: Title`, then a metadata table: Priority (P0-P3 + one-line reason), Mode (A/B/C per exercise),
   Time budget, Prerequisites, Minimum versions (e.g. Python 3.12, PHP 8.2, C++20), Deliverable.
+
 - Code must be correct and runnable as written. Mark the minimum language/framework version. Do not invent APIs,
   flags, compiler behavior, benchmark numbers or documentation references. If unsure, write
   `VERIFY: <how to check>` instead of asserting. Never fabricate benchmark results: give the method and say
   to measure.
+
 - Version-sensitive facts (Moodle APIs, FastAPI/Pydantic v2 behavior, C++23 features) must be labelled with the version
   and, when tools allow, checked against official docs (docs.python.org, fastapi.tiangolo.com, php.net, moodledev.io,
   en.cppreference.com). Distinguish language guarantees / framework behavior / implementation detail / convention / opinion.
+
 - Python examples use Python 3.12+, type hints, Pydantic v2, SQLAlchemy 2.x style, pytest. PHP 8.2+. C++20 (flag C++23 explicitly).
 - Math: use plain text / simple LaTeX-free notation (e.g. `E[X] = sum x_i p_i`) so it renders anywhere.
 - Diagrams: ASCII or Mermaid code blocks (```mermaid```). Use them when they materially help (request flows, memory layouts,
   ownership, state machines, DB schemas).
+
 - Length: 3,000-5,000 words per lesson including code. Dense, specific, no padding.
 - Assume reader knows basic programming. Do not explain what a variable is. Do explain internals of the specific language.
 
@@ -31,15 +36,20 @@ quality of his work, never insulting. No filler, no motivational speeches, no re
 2. `## 2. Learning objectives` - 4-7 MEASURABLE objectives ("Implement X that handles Y and write tests for Z"), never "understand X".
 3. `## 3. First-principles explanation` - what / why / problem solved / how it works internally / when to use / when to avoid /
    alternatives / trade-offs / how it fails. Diagrams, traces, memory layouts where useful.
+
 4. `## 4. Worked example` - built step by step with reasoning for each design choice. Include a naive version vs improved
    version where useful and say exactly what changed and why.
+
 5. `## 5. Production perspective` - only the relevant dimensions: maintainability, correctness, performance, security, failure
    handling, testing, observability, operations. Include "what a senior engineer does differently" and common beginner mistakes
    with how to recognize and diagnose them.
+
 6. `## 6. Failure laboratory` - a deliberately flawed implementation/test/assumption. Ask the reader to PREDICT the failure
    first. Put the explanation under a clearly marked `### Reveal (read after predicting)` heading, with a systematic diagnosis procedure.
+
 7. `## 7. Retrieval practice` - 8-12 questions: explain, code-reading, output prediction, short reasoning. Answers NOT here
    (they go in the solutions file).
+
 8. `## 8. Independent implementation challenge` - specify behavior and constraints, do NOT give the implementation. Tag Mode A/B.
 9. `## 9. Project` - a meaningful deliverable. Must include ALL 14 fields as a table or labelled list:
    Problem statement; Context; Requirements; Constraints; Acceptance criteria; Edge cases; Quality requirements;
@@ -49,6 +59,7 @@ quality of his work, never insulting. No filler, no motivational speeches, no re
    performance investigation, threat model, design doc, benchmark report, derivation, simulation, postmortem. At least some
    lessons start from a blank repository. Sometimes add a constraint: no external libs, no AI, time budget, failing test suite,
    perf target, incomplete spec, mid-way requirement change.
+
 10. `## 10. Engineering review` - self-review checklist (correctness, readability, tests, edge cases, security, etc.) and
     "explain your design decisions" prompts.
 11. `## 11. Mastery gate` - explicit pass criteria. Pass = 80/100 with no critical failure (name the critical failures for this lesson).
@@ -62,10 +73,12 @@ After section 12 add `## References` (3-6 high-quality official/primary links, e
 ## Pedagogy rules
 - Every important concept answers: what, why, problem solved, internals, when to use, when to avoid, alternatives, trade-offs, failure,
   how to test understanding, how it appears in production, beginner mistakes + diagnosis, senior approach.
+
 - Teach the simplest design that meets requirements. Call out unnecessary complexity as well as insufficient engineering.
 - Never encourage redesigning an existing codebase or adding dependencies/patterns without understanding team standards.
 - Mark exercises Mode A (closed-book, no AI), Mode B (docs-only, no AI design/code) or Mode C (AI-assisted, learner owns correctness).
   Default to A/B for practice. Do not require AI.
+
 - Defensive security only; no offensive exercises against real systems.
 - Mastery is shown by reproducing, adapting, explaining and defending without the lesson. Reading = "Introduced" at most.
 - Maintain continuity: refer back to earlier lessons by number instead of re-explaining. Forward-refer sparingly.
@@ -73,6 +86,7 @@ After section 12 add `## References` (3-6 high-quality official/primary links, e
 - Quant: never imply a toy strategy is profitable. Separate mathematical correctness from implementation correctness.
 - Solutions file: for each exercise give the reference approach, trade-offs, and at least one plausible alternative; answers to every
   retrieval question; reveal rubric scoring notes.
+
 - Honest uncertainty beats confident error.
 
 ## Priority labels

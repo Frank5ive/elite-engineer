@@ -121,12 +121,14 @@ Total: 38 lessons and 5 capstones.
 Assumptions, adjust to reality and record the adjustment in your weekly review: five work days (Monday to Friday) at 2-3 hours of study each, two free days (Saturday and Sunday) at 4-5 hours each. That is roughly 18-25 hours per week, about 21 on average. A lesson with its project is typically 8-14 hours including debugging; this is an estimate, not a promise. Your speed will differ and the diagnostic will change it.
 
 **Work-day block (2-3 hours)**
+
 - 10 minutes: cold retrieval of yesterday's items.
 - 60-90 minutes: the day's lesson segment (learn, break, or build; one of those, not all three).
 - 30-45 minutes: implementation or exercise in Mode A/B.
 - 10 minutes: log the day (failure log, ledger).
 
 **Free-day block (4-5 hours, with a real break in the middle)**
+
 - 15 minutes: cold retrieval of the week's items.
 - 90-120 minutes: the larger build (project or capstone milestone).
 - 20-30 minute break away from the screen.

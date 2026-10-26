@@ -69,6 +69,7 @@ Keep one portfolio repository per track under a `portfolio/` directory (outside 
 Assumptions: Week 1 starts the Monday you begin the job. Monday to Friday are work days (study blocks of 2-3 hours); Saturday and Sunday are free days (4-5 hours). Each cell is a block; "W" means a work-day block, "F" means a free-day block. Block contents: retrieval (10-15 min cold) always opens a block, and the end of the block is the failure-log/ledger tidy (10 min). Total weekly target about 21 hours.
 
 **Daily block templates**
+
 - Work-day block (2-3 h): 10 min cold retrieval; 60-90 min learn/break or build (one at a time); 30-45 min exercise (Mode A/B); 10 min log.
 - Free-day block (4-5 h): 15 min retrieval; 90-120 min build; 20-30 min break (away from screen); 90 min second build or debug; 30 min review (Saturday: tidy; Sunday: weekly review).
 
@@ -90,6 +91,7 @@ Assumptions: Week 1 starts the Monday you begin the job. Monday to Friday are wo
 | 12 | W: 3.5 events and tasks | W: 3.5 web services, caching | W: 3.5 File API and privacy API | W: 3.5 project | W: 3.6 PHPUnit | F: 3.6 Behat, upgrades, gate; Capstone B M0 | F: review the quarter; update roadmap; weekly review |
 
 Notes on the table:
+
 - Week 5 Thursday is a catch-up slot by design; use it for the lesson you are behind on, otherwise finish the gate.
 - The table assumes a diagnostic at Standard routing. For Accelerated or Test-out routes, replace the learn blocks with a cold attempt at the gate project; spend recovered time on Capstone A earlier or on retests.
 - Weeks 10-12 deliver Vol 3 only if Vol 2 is done. If your job is Moodle-heavy, swap weeks 4-9 and 10-12 blocks as in section 2.

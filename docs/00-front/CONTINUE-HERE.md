@@ -69,6 +69,7 @@ Always start by pointing the session at the files; do not paste large files if t
 ## 6. Rules for the helping session
 
 State these to the session if it does not already know them:
+
 - The reader is demanding of quality; be rigorous, never insulting, no filler or motivational speeches.
 - Verify before asserting: framework and language facts must match the stated versions; use `VERIFY:` when unsure; never fabricate benchmark numbers, documentation references, API names or statistics.
 - Never claim any trading strategy is profitable; keep mathematical correctness separate from implementation correctness.
